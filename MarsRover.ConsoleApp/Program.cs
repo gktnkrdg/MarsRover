@@ -2,6 +2,7 @@
 using Serilog;
 using Serilog.Events;
 using System;
+using System.Linq;
 
 namespace MarsRover.ConsoleApp
 {
@@ -23,7 +24,7 @@ namespace MarsRover.ConsoleApp
                                     MMRMMRMRRM";
                 CommandHandlerService s = new CommandHandlerService();
 
-                s.ParseCommands(commandText.Split(Environment.NewLine));
+                Console.WriteLine( s.ParseCommands(commandText.Split(Environment.NewLine)).Select(c => c.GetRoverPositionDetailedString()).ToArray());
 
 
             }

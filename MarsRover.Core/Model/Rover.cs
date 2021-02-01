@@ -19,17 +19,16 @@ namespace MarsRover.Core
 			switch (Position.Direction)
 			{
 				case Direction.N:
-					this.Position.Coordinate.Y++;
-					
+					SetCoordinate(new Coordinate(Position.Coordinate.X, (++Position.Coordinate.Y)));
 					break;
 				case Direction.W:
-					this.Position.Coordinate.X--;
+					SetCoordinate(new Coordinate((--Position.Coordinate.X), Position.Coordinate.Y));
 					break;
 				case Direction.S:
-					this.Position.Coordinate.Y--;
+					SetCoordinate(new Coordinate(Position.Coordinate.X, (--Position.Coordinate.Y)));
 					break;
 				case Direction.E:
-					this.Position.Coordinate.X++;
+					SetCoordinate(new Coordinate(++Position.Coordinate.X, Position.Coordinate.Y));
 					break;
 				default:
 					break;
@@ -112,15 +111,15 @@ namespace MarsRover.Core
 		private void SetCoordinate(Coordinate coordinate)
 		{
 			if (!IsValidCoordinate(coordinate))
-				throw new ArgumentException($"Coorddinate { coordinate }  is not valid");
+				throw new InvalidOperationException($"Coorddinate { coordinate }  is not valid");
 			this.Position.Coordinate = coordinate;
 		}
 
         private bool IsValidCoordinate(Coordinate coordinate)
         {
-			if (coordinate.X > Plateau.Width && coordinate.Y > Plateau.Height)
+			if (coordinate.X > Plateau.Width || coordinate.Y > Plateau.Height)
 				return false;
-			if (coordinate.X < 0 && coordinate.Y < 0)
+			if (coordinate.X < 0 || coordinate.Y < 0)
 				return false;
 			return true;
         }
